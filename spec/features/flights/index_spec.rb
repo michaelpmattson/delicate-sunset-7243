@@ -36,15 +36,31 @@ RSpec.describe 'flights index page' do
     end
 
     it 'lists all flight numbers' do
-
+      expect(page).to have_content(@reno.number)
+      expect(page).to have_content(@kenosha.number)
+      expect(page).to have_content(@honolulu.number)
     end
 
-    xit 'prints the name of each airline next to the flight' do
+    it 'prints the name of each airline next to the flight' do
+      within "#flight-#{@reno.id}" do
+        expect(page).to have_content(@pan_am.name)
+      end
 
+      within "#flight-#{@kenosha.id}" do
+        expect(page).to have_content(@pan_am.name)
+      end
+
+      within "#flight-#{@honolulu.id}" do
+        expect(page).to have_content(@united.name)
+      end
     end
 
-    xit 'prints the names of all passengers under each flight number' do
-
+    it 'prints the names of all passengers under each flight number' do
+      within "#flight-#{@reno.id}" do
+        expect(page).to     have_content(@mike.name)
+        expect(page).to     have_content(@carol.name)
+        expect(page).to_not have_content(@marcia.name)
+      end
     end
   end
 end
