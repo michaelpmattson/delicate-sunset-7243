@@ -1,0 +1,7 @@
+<h3><%= @airline.name %> passengers:</h3>
+<ul>
+  <% @airline.display_passengers.each do |passenger| %>
+    <li><%= passenger.name %></li>
+  <% end %>
+</ul>
+  
