@@ -19,9 +19,10 @@ RSpec.describe Flight do
 
     describe '#display_passengers' do
       before(:each) do
-        @pan_am = Airline.create!(name: 'Pan American World Airways')
+        @pan_am    = Airline.create!(name: 'Pan American World Airways')
         @reno      = @pan_am.flights.create!(number: 1234, date: '04/01/1975', departure_city: 'LAX', arrival_city: 'RNO')
         @kenosha   = @pan_am.flights.create!(number: 4321, date: '04/01/1975', departure_city: 'LAX', arrival_city: 'ENW')
+        @dc        = @pan_am.flights.create!(number: 6545, date: '04/25/1976')
 
         @united    = Airline.create!(name: 'United Airlines')
         @honolulu  = @united.flights.create!(number: 6872, date: '04/01/1975', departure_city: 'LAX', arrival_city: 'HNL')
@@ -38,6 +39,7 @@ RSpec.describe Flight do
 
         @reno.passengers << @mike
         @reno.passengers << @carol
+        @reno.passengers << @marcia
 
         @kenosha.passengers << @mike
         @kenosha.passengers << @marcia
@@ -47,12 +49,14 @@ RSpec.describe Flight do
         @kenosha.passengers << @peter
         @kenosha.passengers << @bobby
 
+        @dc.passengers << @marcia
+
         @honolulu.passengers << @alice
       end
 
-      it 'shows unique adult passengers for the airline only' do
+      it 'shows unique adult passengers for the airline only, by frequent flyer' do
         expect(@united.display_passengers).to eq([@alice])
-        expect(@pan_am.display_passengers).to eq([@mike, @carol, @marcia])
+        expect(@pan_am.display_passengers).to eq([@marcia, @mike, @carol])
       end
     end
   end
